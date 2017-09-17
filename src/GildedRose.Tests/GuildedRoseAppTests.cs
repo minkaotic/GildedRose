@@ -94,8 +94,46 @@ namespace GildedRose.Tests
             Assert.That(_backstagePasses.Quality, Is.EqualTo(newQuality));
         }
 
+        [Test]
+        public void Dexterity_vests_quality_degrades_by_2_if_sellIn_date_is_less_than_0()
+        {
+            while(_dexterityVest.SellIn > 0)
+                {
+                    _app.UpdateQuality();
+                }
+            Assert.That(_dexterityVest.Quality, Is.EqualTo(10), "Dexterity Vest's Quality should degrade by 1 up until this point");
+
+            _app.UpdateQuality(); //update after sell-by date has passed
+            Assert.That(_dexterityVest.Quality, Is.EqualTo(8), "Dexterity Vest's Quality should degrade by 2 from this point");
+        }
+
+        [Test]
+        public void Mongoose_elexirs_quality_degrades_by_2_if_sellIn_date_is_less_than_0()
+        {
+            while (_mongooseElexir.SellIn > 0)
+            {
+                _app.UpdateQuality();
+            }
+            Assert.That(_mongooseElexir.Quality, Is.EqualTo(2), "Mongoose Elexir's Quality should degrade by 1 up until this point");
+
+            _app.UpdateQuality(); //update after sell-by date has passed
+            Assert.That(_mongooseElexir.Quality, Is.EqualTo(0), "Mongoose Elexir's Quality should degrade by 2 from this point");
+        }
+
+        [Test]
+        public void Mana_cakes_quality_degrades_by_2_if_sellIn_date_is_less_than_0()
+        {
+            while (_conjuredManaCake.SellIn > 0)
+            {
+                _app.UpdateQuality();
+            }
+            Assert.That(_conjuredManaCake.Quality, Is.EqualTo(3), "Conjured Mana Cake's Quality should degrade by 1 up until this point");
+
+            _app.UpdateQuality(); //update after sell-by date has passed
+            Assert.That(_conjuredManaCake.Quality, Is.EqualTo(1), "Conjured Mana Cake's Quality should degrade by 2 from this point");
+        }
+
         /*TODO:
-        (1) Once the sell by date has passed, Quality degrades twice as fast
         (2) The Quality of an item is never negative
         (5) "Sulfuras" is a legendary item and as such its Quality is 80 and it never alters.
         */
