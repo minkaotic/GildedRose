@@ -50,10 +50,36 @@ namespace GildedRose.Tests
             Assert.That(_conjuredManaCake.SellIn, Is.EqualTo(2),  "Conjured Mana Cake' SellIn should decrease by 1");
         }
 
+        [TestCase(2, 2)]
+        [TestCase(5, 8)]
+        [TestCase(10, 18)]
+        [TestCase(25, 48)]
+        public void Aged_Brie_keeps_increasing_in_quality(int numberOfDays, int expectedQuality)
+        {
+            for (var i = 0; i < numberOfDays; i++)
+            {
+                _app.UpdateQuality();
+            }
+
+            Assert.That(_agedBrie.Quality, Is.EqualTo(expectedQuality));
+        }
+
+        [TestCase(26)]
+        [TestCase(30)]
+        [TestCase(100)]
+        public void Aged_Brie_has_max_quality_of_50(int numberOfDays)
+        {
+            for (var i = 0; i < numberOfDays; i++)
+            {
+                _app.UpdateQuality();
+            }
+
+            Assert.That(_agedBrie.Quality, Is.EqualTo(50));
+        }
+
         /*TODO:
         (1) Once the sell by date has passed, Quality degrades twice as fast
-        (2) The Quality of an item is never negative
-        (3) "Aged Brie" actually increases in Quality the older it gets
+        (2) The Quality of an item is never negative (nor is Sellin!)
         (4) The Quality of an item is never more than 50 (except Sulfuras)
         (5) "Sulfuras" is a legendary item and as such its Quality is 80 and it never alters.
         (6) "Backstage passes", like aged brie, increases in Quality as it's SellIn value
