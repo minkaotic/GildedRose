@@ -40,7 +40,7 @@ namespace GildedRose.Tests
             Assert.That(_mongooseElexir.Quality, Is.EqualTo(6), "Elixir of the Mongoose's Quality should degrade by 1");
             Assert.That(_mongooseElexir.SellIn, Is.EqualTo(4),  "Elixir of the Mongoose's SellIn should degrade by 1");
 
-            Assert.That(_sulfuras.Quality, Is.EqualTo(80), "Sulfuras's Quality never degrades");
+            Assert.That(_sulfuras.Quality, Is.EqualTo(80), "Sulfuras's Quality never degrades and should remain at 80");
             Assert.That(_sulfuras.SellIn, Is.EqualTo(0),   "Sulfuras's SellIn should remain at 0");
 
             Assert.That(_backstagePasses.Quality, Is.EqualTo(21), "Backstage Passes' Quality should increase by 1");
