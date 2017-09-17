@@ -77,15 +77,27 @@ namespace GildedRose.Tests
             Assert.That(_agedBrie.Quality, Is.EqualTo(50));
         }
 
+        [TestCase(2, 22)]
+        [TestCase(5, 25)]
+        [TestCase(6, 27)] //Quality increases by 2 per day when there are 10 days or less
+        [TestCase(10, 35)] //Quality increases by 2 per day when there are 10 days or less
+        [TestCase(11, 38)] //Quality increases by 3 per day when there are 5 days or less
+        [TestCase(15, 50)] //Quality increases by 3 per day when there are 5 days or less
+        [TestCase(16, 0)] //Quality drops to 0 on day of concert
+        public void Backstage_passes_increase_in_quality_before_concert_but_then_drop_to_0(int numberOfDays, int newQuality)
+        {
+            for (var i = 0; i < numberOfDays; i++)
+            {
+                _app.UpdateQuality();
+            }
+
+            Assert.That(_backstagePasses.Quality, Is.EqualTo(newQuality));
+        }
+
         /*TODO:
         (1) Once the sell by date has passed, Quality degrades twice as fast
-        (2) The Quality of an item is never negative (nor is Sellin!)
-        (4) The Quality of an item is never more than 50 (except Sulfuras)
+        (2) The Quality of an item is never negative
         (5) "Sulfuras" is a legendary item and as such its Quality is 80 and it never alters.
-        (6) "Backstage passes", like aged brie, increases in Quality as it's SellIn value
-            approaches; Quality increases by 2 when there are 10 days or less and by 3 when 
-            there are 5 days or less but Quality drops to 0 after the concert
         */
     }
 }
- 
