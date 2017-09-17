@@ -146,8 +146,19 @@ namespace GildedRose.Tests
             Assert.That(_conjuredManaCake.Quality, Is.EqualTo(0), "Expected Conjured Mana Cake's Quality to remain 0 after 100 runs");
         }
 
-        /*TODO:
-        (5) "Sulfuras" is a legendary item and as such its Quality is 80 and it never alters.
-        */
+        [TestCase(2)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(25)]
+        [TestCase(100)]
+        public void Sulfuras_always_has_quality_of_80(int numberOfDays)
+        {
+            for (var i = 0; i < numberOfDays; i++)
+            {
+                _app.UpdateQuality();
+            }
+
+            Assert.That(_sulfuras.Quality, Is.EqualTo(80));
+        }
     }
 }
