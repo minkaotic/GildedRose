@@ -133,8 +133,20 @@ namespace GildedRose.Tests
             Assert.That(_conjuredManaCake.Quality, Is.EqualTo(1), "Conjured Mana Cake's Quality should degrade by 2 from this point");
         }
 
+        [Test]
+        public void The_quality_of_degrading_items_is_never_negative()
+        {
+            for (var i=0; i < 100; i++)
+            {
+                _app.UpdateQuality();
+            }
+
+            Assert.That(_dexterityVest.Quality, Is.EqualTo(0), "Expected Dexterity Vest's Quality to remain 0 after 100 runs");
+            Assert.That(_mongooseElexir.Quality, Is.EqualTo(0), "Expected Mongoose Elexir's Quality to remain 0 after 100 runs");
+            Assert.That(_conjuredManaCake.Quality, Is.EqualTo(0), "Expected Conjured Mana Cake's Quality to remain 0 after 100 runs");
+        }
+
         /*TODO:
-        (2) The Quality of an item is never negative
         (5) "Sulfuras" is a legendary item and as such its Quality is 80 and it never alters.
         */
     }
