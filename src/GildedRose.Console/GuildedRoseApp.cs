@@ -24,10 +24,7 @@ namespace GildedRose.Console
 				}
 				if (Items[i].Name == "Aged Brie")
 				{
-					if (Items[i].Quality < 50)
-					{
-						Items[i].Quality += 1;
-					}
+					IncreaseQualityBy(1, i);
 				}
 				else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
 				{
@@ -37,23 +34,17 @@ namespace GildedRose.Console
 
 						if (Items[i].SellIn < 11)
 						{
-							if (Items[i].Quality < 50)
-							{
-								Items[i].Quality += 1;
-							}
+							IncreaseQualityBy(1, i);
 						}
 						if (Items[i].SellIn < 6)
 						{
-							if (Items[i].Quality < 50)
-							{
-								Items[i].Quality += 1;
-							}
+							IncreaseQualityBy(1, i);
 						}
 					}
 				}
 				else
 				{
-					UpdateQualityOfDegradingItems(i);
+					DecreaseQualityBy(1, i);
 				}
 
 				Items[i].SellIn -= 1;
@@ -75,19 +66,24 @@ namespace GildedRose.Console
 				}
 				else
 				{
-					if (Items[i].Quality < 50)
-					{
-						Items[i].Quality += 1;
-					}
+					IncreaseQualityBy(1, i);
 				}
 			}
 		}
 
-		private void UpdateQualityOfDegradingItems(int i)
+		private void IncreaseQualityBy(int additionalQuality, int i)
+		{
+			if (Items[i].Quality < 50)
+			{
+				Items[i].Quality += additionalQuality;
+			}
+		}
+
+		private void DecreaseQualityBy(int subtractingQuality, int i)
 		{
 			if (Items[i].Quality > 0)
 			{
-				Items[i].Quality -= 1;
+				Items[i].Quality -= subtractingQuality;
 			}
 		}
 	}
