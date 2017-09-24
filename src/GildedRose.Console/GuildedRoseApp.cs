@@ -22,35 +22,42 @@ namespace GildedRose.Console
 				{
 					continue;
 				}
-				if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-				{
-					UpdateQualityOfDegradingItems(i);
-				}
-				else
+				if (Items[i].Name == "Aged Brie")
 				{
 					if (Items[i].Quality < 50)
 					{
 						Items[i].Quality += 1;
-						if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+					}
+				}
+				else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+				{
+					if (Items[i].Quality < 50)
+					{
+						Items[i].Quality += 1;
+
+						if (Items[i].SellIn < 11)
 						{
-							if (Items[i].SellIn < 11)
+							if (Items[i].Quality < 50)
 							{
-								if (Items[i].Quality < 50)
-								{
-									Items[i].Quality += 1;
-								}
+								Items[i].Quality += 1;
 							}
-							if (Items[i].SellIn < 6)
+						}
+						if (Items[i].SellIn < 6)
+						{
+							if (Items[i].Quality < 50)
 							{
-								if (Items[i].Quality < 50)
-								{
-									Items[i].Quality += 1;
-								}
+								Items[i].Quality += 1;
 							}
 						}
 					}
 				}
+				else
+				{
+					UpdateQualityOfDegradingItems(i);
+				}
+
 				Items[i].SellIn -= 1;
+
 				if (Items[i].SellIn >= 0) continue;
 				if (Items[i].Name != "Aged Brie")
 				{
