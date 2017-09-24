@@ -24,11 +24,11 @@ namespace GildedRose.Console
 				}
 				if (Items[i].Name == "Aged Brie")
 				{
-					IncreaseQualityBy(Items[i].SellIn > 0 ? 1 : 2, i);
+					IncreaseQualityBy(IsNotExpired(i) ? 1 : 2, i);
 				}
 				else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
 				{
-					if (Items[i].SellIn > 0)
+					if (IsNotExpired(i))
 					{
 						if (Items[i].Quality < 50)
 						{
@@ -51,19 +51,25 @@ namespace GildedRose.Console
 				}
 				else
 				{
-					DecreaseQualityBy(1, i);
+					//DecreaseQualityBy(1, i);
+					DecreaseQualityBy(IsNotExpired(i) ? 1 : 2, i);
 				}
 
 				Items[i].SellIn -= 1;
 
-				if (Items[i].SellIn >= 0) continue;
-				if (Items[i].Name == "Aged Brie") continue;
-				if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert") continue;
-				if (Items[i].Quality > 0)
-				{
-					Items[i].Quality -= 1;
-				}
+				//if (Items[i].SellIn >= 0) continue;
+				//if (Items[i].Name == "Aged Brie") continue;
+				//if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert") continue;
+				//if (Items[i].Quality > 0)
+				//{
+				//	Items[i].Quality -= 1;
+				//}
 			}
+		}
+
+		private bool IsNotExpired(int i)
+		{
+			return Items[i].SellIn > 0;
 		}
 
 		private void IncreaseQualityBy(int additionalQuality, int i)
@@ -76,7 +82,7 @@ namespace GildedRose.Console
 
 		private void DecreaseQualityBy(int subtractingQuality, int i)
 		{
-			if (Items[i].Quality > 0)
+			if (Items[i].Quality - subtractingQuality >= 0)
 			{
 				Items[i].Quality -= subtractingQuality;
 			}
