@@ -24,22 +24,29 @@ namespace GildedRose.Console
 				}
 				if (Items[i].Name == "Aged Brie")
 				{
-					IncreaseQualityBy(1, i);
+					IncreaseQualityBy(Items[i].SellIn > 0 ? 1 : 2, i);
 				}
 				else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
 				{
-					if (Items[i].Quality < 50)
+					if (Items[i].SellIn > 0)
 					{
-						Items[i].Quality += 1;
+						if (Items[i].Quality < 50)
+						{
+							Items[i].Quality += 1;
 
-						if (Items[i].SellIn < 11)
-						{
-							IncreaseQualityBy(1, i);
+							if (Items[i].SellIn < 11)
+							{
+								IncreaseQualityBy(1, i);
+							}
+							if (Items[i].SellIn < 6)
+							{
+								IncreaseQualityBy(1, i);
+							}
 						}
-						if (Items[i].SellIn < 6)
-						{
-							IncreaseQualityBy(1, i);
-						}
+					}
+					else
+					{
+						Items[i].Quality = 0;
 					}
 				}
 				else
@@ -50,23 +57,11 @@ namespace GildedRose.Console
 				Items[i].SellIn -= 1;
 
 				if (Items[i].SellIn >= 0) continue;
-				if (Items[i].Name != "Aged Brie")
+				if (Items[i].Name == "Aged Brie") continue;
+				if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert") continue;
+				if (Items[i].Quality > 0)
 				{
-					if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-					{
-						if (Items[i].Quality > 0)
-						{
-							Items[i].Quality -= 1;
-						}
-					}
-					else
-					{
-						Items[i].Quality = 0;
-					}
-				}
-				else
-				{
-					IncreaseQualityBy(1, i);
+					Items[i].Quality -= 1;
 				}
 			}
 		}
